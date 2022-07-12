@@ -9,7 +9,7 @@ async fn main() -> Result<(), sqlx::Error>{
 
     println!("{:?}", pool);
 
-    sqlx::query("CREATE TABLE test_table(id INT(10) NOT NULL, text VARCHAR(30) NOT NULL);").execute(&pool).await?;
+    crate::db::init::init_db(&pool).await;
 
     loop{}
 }
