@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Transaction {
     pub amount: u32,         // 金額
     pub destination: String, // 支払い先
