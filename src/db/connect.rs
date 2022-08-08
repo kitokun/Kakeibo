@@ -20,7 +20,8 @@ pub async fn connect_db() -> Result<MySqlPool, sqlx::Error> {
     let pool = sqlx::mysql::MySqlPoolOptions::new()
     .max_connections(20)
     .connect(&database_url)
-    .await?;
+    .await
+    .unwrap();
     
     println!("{:?}", pool);
 
