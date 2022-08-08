@@ -1,0 +1,38 @@
+version: '3'
+
+x-environment: &environment
+  MYSQL_DATABASE: kakeibo_db
+  MYSQL_HOST: mysql_container
+  MYSQL_USER: docker
+  MYSQL_PASSWORD: docker
+  MYSQL_ROOT_PASSWORD: root
+  DATABASE_URL: mysql://docker:docker@mysql_container:3306/kakeibo_db
+  TZ: 'Asia/Tokyo'
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysql_container
+    environment: *environment
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - app-net
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  kakeibo:
+    build: .
+    environment: *environment
+    container_name: kakeibo
+    networks:
+      - app-net
+    ports:
+      - "8080:8080"
+  
+networks:
+  app-net:
+    driver: bridge
