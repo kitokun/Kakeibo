@@ -24,5 +24,4 @@ async fn get_transaction() -> HttpResponse {
             return HttpResponse::InternalServerError().json(error.to_string())
         },
     }
-
 }

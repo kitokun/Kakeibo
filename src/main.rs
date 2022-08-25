@@ -11,7 +11,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
 
     println!("{:?}", pool);
 
-    crate::db::init::init_db(&pool).await?;
+    //crate::db::init::init_db(&pool).await?;
 
     actix_web::HttpServer::new(|| {
         let cors = actix_cors::Cors::default()
