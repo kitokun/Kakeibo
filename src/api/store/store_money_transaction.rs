@@ -40,3 +40,15 @@ pub async fn create_new_supplier(pool: &sqlx::MySqlPool, supplier: &Supplier) ->
 
     Ok(())
 }
+
+pub async fn get_sum_amount(pool: &sqlx::MySqlPool) -> Result<sqlx::types::BigDecimal, sqlx::Error> {
+    let raw_result = sqlx::query!(
+        "SELECT sum(amount) as sum FROM money_transactions"
+    )
+    .fetch_one(pool)
+    .await?;
+
+    let result = raw_result.sum.unwrap();
+
+    Ok(result)
+}

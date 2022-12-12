@@ -4,7 +4,6 @@ USER root
 WORKDIR /home/rust
 COPY . .
 EXPOSE 3306
-ENV DATABASE_URL=mysql://docker:docker@0.0.0.0:3306/kakeibo_db
 RUN cargo build --release
 
 FROM alpine:latest
