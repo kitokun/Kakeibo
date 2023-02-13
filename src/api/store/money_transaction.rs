@@ -1,6 +1,5 @@
 use crate::db::connect::{connect_db};
 use crate::api::controller::request::money::Transaction;
-use crate::api::controller::request::supplier::Supplier;
 
 pub async fn create_transaction(pool: &sqlx::MySqlPool, transaction: &Transaction) -> Result<(), sqlx::Error> {
 
@@ -30,15 +29,6 @@ pub async fn select_all_transactions(pool: &sqlx::MySqlPool) -> Result<Vec<Trans
     .await?;
 
     Ok(transactions)
-}
-
-pub async fn create_new_supplier(pool: &sqlx::MySqlPool, supplier: &Supplier) -> Result<(), sqlx::Error> {
-    sqlx::query("INSERT INTO transaction_suppliers (supplier) VALUES (?)")
-    .bind(&supplier.supplier)
-    .execute(pool)
-    .await.unwrap();
-
-    Ok(())
 }
 
 pub async fn get_sum_amount(pool: &sqlx::MySqlPool) -> Result<sqlx::types::BigDecimal, sqlx::Error> {

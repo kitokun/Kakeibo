@@ -23,7 +23,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
             .wrap(actix_web::middleware::Logger::default())
             .service(crate::api::controller::money_transaction::create_new_transaction)
             .service(crate::api::controller::money_transaction::get_transaction)
-            .service(crate::api::controller::money_transaction::register_supplier)
+            .service(crate::api::controller::transaction_entity::register_transaction_entity)
+            .service(crate::api::controller::transaction_entity::get_transaction_entities)
             .service(crate::api::controller::money_transaction::assets)})
             .bind("0.0.0.0:8080")?
             .run()

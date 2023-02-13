@@ -1,3 +1,3 @@
 pub mod money;
-pub mod supplier;
+pub mod transaction_entity;
 pub mod asset;

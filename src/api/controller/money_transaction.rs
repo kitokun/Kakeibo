@@ -1,9 +1,8 @@
 use crate::api::controller::request::money::Transaction;
-use crate::api::controller::request::supplier::Supplier;
 use crate::api::controller::request::asset::Asset;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-use crate::api::service::service_money_transaction::
-    {store_transaction, get_all_transactions, store_supplier, get_assets};
+use crate::api::service::money_transaction::
+    {store_transaction, get_all_transactions, get_assets};
 use num_traits::cast::ToPrimitive;
 
 #[post("/money_transaction/create")]
@@ -44,11 +43,4 @@ async fn assets() -> HttpResponse {
             return HttpResponse::InternalServerError().json(error.to_string())
         },
     }
-}
-
-#[post("/supplier/register")]
-async fn register_supplier(new_supplier: web::Json<Supplier>) -> impl Responder {
-    store_supplier(&new_supplier).await.unwrap_or(());
-
-    HttpResponse::Ok().json("ok")
 }
