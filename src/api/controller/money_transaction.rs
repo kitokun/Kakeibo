@@ -12,7 +12,7 @@ async fn create_new_transaction(new_transaction: web::Json<Transaction>) -> impl
     HttpResponse::Ok().json("ok")
 }
 
-#[get("/money_transaction/get")]
+#[get("/money_transaction")]
 async fn get_transaction() -> HttpResponse {
     let transactions = get_all_transactions().await;
 
