@@ -24,6 +24,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
             .service(
                     (crate::api::controller::money_transaction::create_new_transaction
                     ,crate::api::controller::money_transaction::get_transaction
+                    ,crate::api::controller::money_transaction::cancel_transaction
                     ,crate::api::controller::transaction_entity::register_transaction_entity
                     ,crate::api::controller::transaction_entity::get_transaction_entities
                     ,crate::api::controller::money_transaction::assets)

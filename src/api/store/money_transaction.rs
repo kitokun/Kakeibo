@@ -1,6 +1,6 @@
 use crate::db::connect::{connect_db};
 use crate::api::controller::request::money::Transaction;
-
+use crate::api::controller::request::transaction_id::TransactionId;
 pub async fn create_transaction(pool: &sqlx::MySqlPool, transaction: &Transaction) -> Result<(), sqlx::Error> {
 
     sqlx::query(
@@ -13,6 +13,19 @@ pub async fn create_transaction(pool: &sqlx::MySqlPool, transaction: &Transactio
     .bind(&transaction.amount)
     .bind(&transaction.nominal)
     .bind(&transaction.description)
+    .execute(pool)
+    .await.unwrap();
+
+    Ok(())
+}
+
+pub async fn delete_transaction(pool: &sqlx::MySqlPool, id: &TransactionId) -> Result<(), sqlx::Error> {
+
+    println!("{}", &id.id);
+    sqlx::query(
+        "DELETE FROM money_transactions where id = ?"
+    )
+    .bind(&id.id)
     .execute(pool)
     .await.unwrap();
 
