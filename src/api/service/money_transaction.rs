@@ -10,31 +10,58 @@ use crate::api::store::money_transaction::
     };
 
 pub async fn store_transaction(transaction: &Transaction) -> Result<(), sqlx::Error> {
-    let pool = connect_db().await?;
+    let pool = connect_db().await.unwrap();
+    let result = create_transaction(&pool, transaction).await;
 
-    create_transaction(&pool, transaction).await?;
-
-    Ok(())
+    match result {
+        Ok(_) => {
+            return Ok(())
+        },
+        Err(error) => {
+            return Err(error)
+        },
+    }
 }
 
 pub async fn delete_transaction_by_id(id: &TransactionId) -> Result<(), sqlx::Error> {
     let pool = connect_db().await?;
-
-    delete_transaction(&pool, id).await?;
-
-    Ok(())
+    let result = delete_transaction(&pool, id).await;
+    
+    match result {
+        Ok(_) => {
+            return Ok(())
+        },
+        Err(error) => {
+            return Err(error)
+        },
+    }
 }
 
 pub async fn get_all_transactions() -> Result<Vec<Transaction>, sqlx::Error> {
     let pool = connect_db().await?;
 
-    let transactions = select_all_transactions(&pool).await?;
+    let transactions = select_all_transactions(&pool).await;
 
-    Ok(transactions)
+    match transactions {
+        Ok(transactions) => {
+            return Ok(transactions)
+        },
+        Err(error) => {
+            return Err(error)
+        },
+    }
 }
 
 pub async fn get_assets() -> Result<sqlx::types::BigDecimal, sqlx::Error> {
     let pool = connect_db().await?;
+    let result = get_sum_amount(&pool).await;
 
-    Ok(get_sum_amount(&pool).await?)
+    match result {
+        Ok(result) => {
+            return Ok(result)
+        },
+        Err(error) => {
+            return Err(error)
+        },
+    }
 }

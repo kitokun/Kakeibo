@@ -4,13 +4,20 @@ use crate::api::service::transaction_entity::
         store_transaction_entity,
         get_all_transaction_entities
     };
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, post, web, HttpResponse, Responder};
 
 #[post("/transaction_entity")]
 async fn register_transaction_entity(new_transaction_entity: web::Json<TransactionEntity>) -> impl Responder {
-    store_transaction_entity(&new_transaction_entity).await.unwrap_or(());
-
-    HttpResponse::Ok().json("ok")
+    let result = store_transaction_entity(&new_transaction_entity).await;
+    
+    match result {
+        Ok(_) => {
+            return HttpResponse::Ok().json("ok")
+        },
+        Err(error) => {
+            return HttpResponse::InternalServerError().json(error.to_string())
+        },
+    }
 }
 
 #[get("/transaction_entity")]
