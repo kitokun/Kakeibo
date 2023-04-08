@@ -7,7 +7,7 @@ use crate::api::service::transaction_entity::
 use actix_web::{get, post, web, HttpResponse, Responder};
 
 #[post("/transaction_entity")]
-async fn register_transaction_entity(new_transaction_entity: web::Json<TransactionEntity>) -> impl Responder {
+async fn post_transaction_entity(new_transaction_entity: web::Json<TransactionEntity>) -> impl Responder {
     let result = store_transaction_entity(&new_transaction_entity).await;
     
     match result {

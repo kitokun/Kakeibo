@@ -11,8 +11,8 @@ use crate::api::service::money_transaction::
     };
 use num_traits::cast::ToPrimitive;
 
-#[post("/money_transaction/create")]
-async fn create_new_transaction(new_transaction: web::Json<Transaction>) -> impl Responder {
+#[post("/transaction")]
+async fn post_transaction(new_transaction: web::Json<Transaction>) -> impl Responder {
     let result = store_transaction(&new_transaction).await;
     match result {
         Ok(_) => {
@@ -24,7 +24,7 @@ async fn create_new_transaction(new_transaction: web::Json<Transaction>) -> impl
     }
 }
 
-#[get("/money_transaction")]
+#[get("/transaction")]
 async fn get_transaction() -> HttpResponse {
     let transactions = get_all_transactions().await;
 
@@ -38,8 +38,8 @@ async fn get_transaction() -> HttpResponse {
     }
 }
 
-#[delete("/money_transaction")]
-async fn cancel_transaction(transaction_id: web::Query<TransactionId>) -> HttpResponse {
+#[delete("/transaction")]
+async fn delete_transaction(transaction_id: web::Query<TransactionId>) -> HttpResponse {
     
     let result = delete_transaction_by_id(&transaction_id).await;
     match result {
@@ -54,7 +54,7 @@ async fn cancel_transaction(transaction_id: web::Query<TransactionId>) -> HttpRe
 }
 
 #[get("/asset")]
-async fn assets() -> HttpResponse {
+async fn get_asset() -> HttpResponse {
     let raw_asset = get_assets().await;
 
     match raw_asset {
