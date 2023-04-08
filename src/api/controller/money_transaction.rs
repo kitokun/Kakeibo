@@ -13,8 +13,16 @@ use num_traits::cast::ToPrimitive;
 
 #[post("/money_transaction/create")]
 async fn create_new_transaction(new_transaction: web::Json<Transaction>) -> impl Responder {
-    store_transaction(&new_transaction).await.unwrap_or(());
-
+    result = store_transaction(&new_transaction).await;
+    match result {
+        Ok(_) => {
+            return HttpResponse::Ok().json("ok")
+        },
+        Err(error) => {
+            return HttpResponse::InternalServerError().json(error.to_string())
+        },
+    }
+    
     HttpResponse::Ok().json("ok")
 }
 
@@ -36,9 +44,16 @@ async fn get_transaction() -> HttpResponse {
 async fn cancel_transaction(transaction_id: web::Query<TransactionId>) -> HttpResponse {
     
     println!("{}", &transaction_id.id);
-    delete_transaction_by_id(&transaction_id).await.unwrap_or(());
+    result = delete_transaction_by_id(&transaction_id).await;
+    match result {
+        Ok(_) => {
+            return HttpResponse::Ok().json("ok")
+        },
+        Err(error) => {
+            return HttpResponse::InternalServerError().json(error.to_string())
+        },
+    }
 
-    HttpResponse::Ok().json("ok")
 }
 
 #[get("/asset")]
