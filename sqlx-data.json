@@ -1,0 +1,28 @@
+{
+  "db": "MySQL",
+  "c496351578afe7f6bcf1fab1ad2cc7329569ba983582d5b7a94fc69f60810d25": {
+    "describe": {
+      "columns": [
+        {
+          "name": "sum",
+          "ordinal": 0,
+          "type_info": {
+            "char_set": 63,
+            "flags": {
+              "bits": 128
+            },
+            "max_size": 37,
+            "type": "NewDecimal"
+          }
+        }
+      ],
+      "nullable": [
+        true
+      ],
+      "parameters": {
+        "Right": 0
+      }
+    },
+    "query": "SELECT sum(amount) as sum FROM money_transactions"
+  }
+}

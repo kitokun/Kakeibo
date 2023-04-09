@@ -2,6 +2,9 @@ mod api;
 mod db;
 extern crate env_logger;
 
+use crate::api::controller::money_transaction::{get_transaction, post_transaction, delete_transaction, get_asset};
+use crate::api::controller::transaction_entity::{get_transaction_entities, post_transaction_entity};
+
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>>{
     std::env::set_var("RUST_LOG", "actix_web=debug");
@@ -11,7 +14,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
 
     println!("{:?}", pool);
 
-    crate::db::init::init_db(&pool).await?;
+    //crate::db::init::init_db(&pool).await?;
 
     actix_web::HttpServer::new(|| {
         let cors = actix_cors::Cors::default()
@@ -21,11 +24,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         actix_web::App::new()
             .wrap(cors)
             .wrap(actix_web::middleware::Logger::default())
-            .service(crate::api::controller::money_transaction::create_new_transaction)
-            .service(crate::api::controller::money_transaction::get_transaction)})
-            .bind("0.0.0.0:8080")?
-            .run()
-            .await?;
+            
+            .service(
+                actix_web::web::scope("/api")
+                    .service(get_transaction)
+                    .service(post_transaction)
+                    .service(delete_transaction)
+                    .service(get_asset)
+                    .service(get_transaction_entities)
+                    .service(post_transaction_entity)
+            )
+        })
+        .bind("0.0.0.0:8080")?
+        .run()
+        .await?;
 
     Ok(())
 }

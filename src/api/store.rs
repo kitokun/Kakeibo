@@ -1,1 +1,2 @@
-pub mod store_money_transaction;
+pub mod money_transaction;
+pub mod transaction_entity;
