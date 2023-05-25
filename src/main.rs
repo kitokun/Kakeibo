@@ -4,6 +4,7 @@ extern crate env_logger;
 
 use crate::api::controller::money_transaction::{get_transaction, post_transaction, delete_transaction, get_asset};
 use crate::api::controller::transaction_entity::{get_transaction_entities, post_transaction_entity};
+use crate::api::controller::user::{get_all_users, get_user_by_id, register_user};
 
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>>{
@@ -33,6 +34,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
                     .service(get_asset)
                     .service(get_transaction_entities)
                     .service(post_transaction_entity)
+                    .service(get_all_users)
+                    .service(get_user_by_id)
+                    .service(register_user)
             )
         })
         .bind("0.0.0.0:8080")?
