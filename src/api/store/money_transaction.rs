@@ -3,8 +3,8 @@ use crate::api::controller::request::transaction_id::TransactionId;
 pub async fn create_transaction(pool: &sqlx::MySqlPool, transaction: &Transaction) -> Result<(), sqlx::Error> {
 
     let result = sqlx::query(
-        "INSERT INTO money_transactions (destination, source, amount, nominal, description) 
-        VALUES (?, ?, ?, ?, ?)
+        "INSERT INTO money_transactions (destination, source, amount, nominal, description, user_id) 
+        VALUES (?, ?, ?, ?, ?, ?)
         "
     )
     .bind(&transaction.destination)
@@ -12,6 +12,7 @@ pub async fn create_transaction(pool: &sqlx::MySqlPool, transaction: &Transactio
     .bind(&transaction.amount)
     .bind(&transaction.nominal)
     .bind(&transaction.description)
+    .bind(&transaction.user_id)
     .execute(pool)
     .await;
     
