@@ -24,14 +24,23 @@ services:
       - app-net
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-  kakeibo:
-    build: .
+  backend:
+    build: backend/
     environment: *environment
-    container_name: kakeibo
+    container_name: backend
     networks:
       - app-net
     ports:
       - "8080:8080"
+
+  frontend:
+    build: frontend/
+    container_name: kakeibo-frontend
+    networks:
+      - app-net
+    ports:
+      - "3000:3000"
+    command: yarn start
   
 networks:
   app-net:
