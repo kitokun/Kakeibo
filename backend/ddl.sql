@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS money_transactions (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
     destination VARCHAR(255) NOT NULL,
     source VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS money_transactions (
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS transaction_entities (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     transaction_entity VARCHAR(255) NOT NULL,
     transaction_entity_type VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),

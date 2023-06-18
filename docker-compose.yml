@@ -15,9 +15,9 @@ services:
     container_name: mysql_container
     environment: *environment
     volumes:
-      - ./docker/db/data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/sql:/docker-entrypoint-initdb.d
+      - ./backend/docker/mysql/data:/var/lib/mysql
+      - ./backend/docker/mysqk/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./backend/docker/mysql/sql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
     networks:

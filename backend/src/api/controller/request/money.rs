@@ -1,5 +1,5 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use sqlx::types::chrono::NaiveDateTime;
 
 #[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
 pub struct Transaction {
@@ -11,6 +11,6 @@ pub struct Transaction {
     pub nominal: String,     // 名目
     pub description: String, // 説明
     pub user_id: i32,        // ユーザID
-    pub create_date: Option<NaiveDateTime>,
-    pub update_date: Option<NaiveDateTime>,
+    pub created_at: Option<DateTime<Utc>>,
+    pub updated_at: Option<DateTime<Utc>>,
 }
