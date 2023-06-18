@@ -1,5 +1,6 @@
-/target
+/backend/target
 ./docker-compose.yml
 /docker/db
 /frontend/yarn-error.log
 /frontend/node_modules
+.env
